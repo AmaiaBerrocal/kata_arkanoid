@@ -14,6 +14,8 @@ class Game:
         pg.display.set_caption("Mi arkanoid")
 
         self.background_img = pg.image.load('resources/background.png').convert()
+        self.font = pg.font.Font('resources/fonts/font.ttf', 28)
+        self.marcador = self.font.render("0", True, (255, 255, 255))
 
         self.player = Racket()
         self.ball = Ball()
@@ -21,7 +23,7 @@ class Game:
         self.tileGroup = pg.sprite.Group()
         for j in range(5):
             for i in range(16):
-                t = Tile(i*50, 10+j*32)
+                t = Tile(i*50, 60+j*32)
                 self.tileGroup.add(t)
                 
         self.playerGroup = pg.sprite.Group() 
@@ -61,8 +63,7 @@ class Game:
             
             self.ball.test_collisions(self.playerGroup)
             self.score += self.ball.test_collisions(self.tileGroup, True)
-            
-            print(self.score)
+            self.marcador = self.font.render(str(self.score), True, (255, 255, 255))
 
             if self.ball.speed == 0:
                 self.player.lives -= 1 
@@ -75,6 +76,8 @@ class Game:
 
             self.allSprites.update(dt)
             self.allSprites.draw(self.screen)
+
+            self.screen.blit(self.marcador, (750, 10))
 
             pg.display.flip()
 
