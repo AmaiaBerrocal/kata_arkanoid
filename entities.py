@@ -73,10 +73,11 @@ class Ball(pg.sprite.Sprite):
         if self.rect.x <= 0:
             self.dx = self.dx * -1
 
-    def test_collision(self, group):
-        candidates = pg.sprite.spritecollide(self, group, False)
+    def test_collisions(self, group, borra=False):
+        candidates = pg.sprite.spritecollide(self, group, borra)
         if len(candidates) > 0:
             self.dy *= -1
+        return len(candidates)
 
 
 class Tile(pg.sprite.Sprite):
