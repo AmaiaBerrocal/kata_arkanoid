@@ -14,10 +14,12 @@ class Game:
         pg.display.set_caption("Mi arkanoid")
 
         self.background_img = pg.image.load('resources/background.png').convert()
+        
         self.player = Racket()
+        self.ball = Ball()
     
         self.allSprites = pg.sprite.Group()
-        self.allSprites.add(self.player)
+        self.allSprites.add(self.player, self.ball)
 
     def gameOver(self):
         pg.quit()
