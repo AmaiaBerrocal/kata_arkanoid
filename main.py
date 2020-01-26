@@ -17,11 +17,19 @@ class Game:
 
         self.player = Racket()
         self.ball = Ball()
+        
+        self.tileGroup = pg.sprite.Group()
+        for j in range(5):
+            for i in range(16):
+                t = Tile(i*50, 10+j*32)
+                self.tileGroup.add(t)
+                
     
         self.playerGroup = pg.sprite.Group() 
         self.allSprites = pg.sprite.Group()
+
         self.playerGroup.add(self.player)
-        self.allSprites.add(self.player, self.ball)
+        self.allSprites.add(self.player, self.ball, self.tileGroup)
 
     def gameOver(self):
         pg.quit()

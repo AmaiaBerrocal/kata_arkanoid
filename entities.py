@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame.locals import *
-from random import choice
+from random import choice, randint
 
 FPS = 60
 
@@ -78,5 +78,20 @@ class Ball(pg.sprite.Sprite):
         if len(candidates) > 0:
             self.dy *= -1
 
-        
-        
+
+class Tile(pg.sprite.Sprite):
+    w = 50
+    h = 32
+
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+        pg.sprite.Sprite.__init__(self)
+
+        self.image = pg.Surface((self.w, self.h), SRCALPHA, 32)     
+        pg.draw.rect(self.image, (randint(0, 255), randint(0, 255), randint(0, 255)), (1, 1, self.w-2, self.h-2))
+
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
