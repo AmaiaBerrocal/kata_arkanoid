@@ -5,6 +5,7 @@ import sys
 from entities import *
 
 FPS = 60
+WHITE = (255, 255, 255)
 
 class Game:
     clock = pg.time.Clock()
@@ -15,7 +16,8 @@ class Game:
 
         self.background_img = pg.image.load('resources/background.png').convert()
         self.font = pg.font.Font('resources/fonts/font.ttf', 28)
-        self.marcador = self.font.render("0", True, (255, 255, 255))
+        self.marcador = self.font.render("0", True, WHITE)
+        self.livescounter = self.font.render("0", True, WHITE)
 
         self.player = Racket()
         self.ball = Ball()
@@ -63,21 +65,25 @@ class Game:
             
             self.ball.test_collisions(self.playerGroup)
             self.score += self.ball.test_collisions(self.tileGroup, True)
-            self.marcador = self.font.render(str(self.score), True, (255, 255, 255))
-
+            
             if self.ball.speed == 0:
                 self.player.lives -= 1 
                 self.ball.start()
+                
 
             if self.player.lives == 0:
                 self.gameOver()
-        
+            
+            self.livescounter = self.font.render(str(self.player.lives), True, WHITE)
+            self.marcador = self.font.render(str(self.score), True, WHITE)
+
             self.screen.blit(self.background_img, (0, 0))
 
             self.allSprites.update(dt)
             self.allSprites.draw(self.screen)
 
             self.screen.blit(self.marcador, (750, 10))
+            self.screen.blit(self.livescounter, (50, 10))
 
             pg.display.flip()
 
