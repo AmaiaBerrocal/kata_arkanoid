@@ -2,6 +2,8 @@ import pygame as pg
 from pygame.locals import *
 import sys
 
+from entities import *
+
 FPS = 60
 
 class Game:
@@ -12,7 +14,11 @@ class Game:
         pg.display.set_caption("Mi arkanoid")
 
         self.background_img = pg.image.load('resources/background.png').convert()
+        self.player = Racket()
     
+        self.allSprites = pg.sprite.Group()
+        self.allSprites.add(self.player)
+
     def gameOver(self):
         pg.quit()
         sys.exit()
@@ -29,6 +35,9 @@ class Game:
             self.handleEvents()
 
             self.screen.blit(self.background_img, (0, 0))
+
+            self.allSprites.update(dt)
+            self.allSprites.draw(self.screen)
 
             pg.display.flip()
 
