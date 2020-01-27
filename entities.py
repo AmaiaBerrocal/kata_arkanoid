@@ -4,6 +4,7 @@ from random import choice, randint
 
 FPS = 60
 
+
 class Racket(pg.sprite.Sprite):
     pictures = 'racket_horizontal.png'
     speed = 10
@@ -43,6 +44,8 @@ class Ball(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
 
         self.image = pg.image.load('resources/{}'.format(self.pictures)).convert_alpha()
+        self.ping = pg.mixer.Sound('resources/sounds/ping.wav')
+        self.lost_point = pg.mixer.Sound('resources/sounds/lost-point.wav')
 
         self.rect = self.image.get_rect()
         self.rect.x = x
@@ -63,20 +66,25 @@ class Ball(pg.sprite.Sprite):
 
         if self.rect.y >= 600 - self.h:
             self.speed = 0
+            self.lost_point.play()
                                 
         if self.rect.y <= 0:
             self.dy = self.dy * -1
+            self.ping.play()
         
         if self.rect.x >= 800 - self.w:
             self.dx = self.dx * -1
+            self.ping.play()
         
         if self.rect.x <= 0:
             self.dx = self.dx * -1
+            self.ping.play()
 
     def test_collisions(self, group, borra=False):
         candidates = pg.sprite.spritecollide(self, group, borra)
         if len(candidates) > 0:
             self.dy *= -1
+            self.ping.play()
         return len(candidates)
 
 
